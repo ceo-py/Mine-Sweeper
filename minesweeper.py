@@ -13,7 +13,7 @@ directions = {
     "up": (0, -1), "down": (0, 1), "left": (-1, 0), "right": (1, 0),
     "top left diagonal": (-1, -1), "bottom left diagonal": (-1, 1),
     "top right diagonal": (1, -1), "bottom right diagonal": (1, 1)}
-mine_field = [[int(x) for x in "0" * COL] for _ in range(ROW)]
+mine_field = [[int(0) for x in range(COL)] for _ in range(ROW)]
 
 
 def load_pictures():
@@ -51,7 +51,7 @@ def check_for_bombs_in_range(row, col):
         check_row, check_col = row + moving_row, col + moving_col
         if check_valid_index(check_row, check_col) and mine_field[check_row][check_col] == "*":
             current_sum += 1
-            mine_field[row][col] = current_sum
+    mine_field[row][col] = current_sum
 
 
 for row in range(START_ROW, ROW):
@@ -69,7 +69,7 @@ def open_zero_field(row, col):
 
 
 class Figure:
-    def __init__(self, name, position):
+    def __init__(self, name):
         self.name = name
         self.visited = "No"
         self.open_field = False
@@ -95,8 +95,8 @@ for row in range(START_ROW, ROW):
     for col in range(COL):
         if mine_field[row][col] != "*":
             symbol = mine_field[row][col]
-            mine_field[row][col] = Figure(symbol, (row, col), )
+            mine_field[row][col] = Figure(symbol)
         else:
-            mine_field[row][col] = Figure("unclicked_bomb", (row, col), )
+            mine_field[row][col] = Figure("unclicked_bomb")
 
 # [print(*mine_field[row]) for row in range(ROW)]
