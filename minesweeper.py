@@ -1,8 +1,8 @@
 import random
 import os
 
-ROW = 8
-COL = 8
+ROW = 9
+COL = 9
 START_ROW = 0
 bombs_number = 10
 field_to_explore = []
@@ -64,13 +64,13 @@ def open_zero_field(row, col):
     if check_valid_index(row, col) and mine_field[row][col].name == 0 and mine_field[row][col].visited == "No":
         mine_field[row][col].picture = mine_field[row][col].name
         mine_field[row][col].visited = "Yes"
+        mine_field[row][col].open_field = True
         [open_zero_field(row, col) for row, col in ((row, col + 1), (row, col - 1), (row + 1, col), (row - 1, col))]
 
 
 class Figure:
     def __init__(self, name, position):
         self.name = name
-        self.position = position
         self.visited = "No"
         self.open_field = False
         self.got_flag = False

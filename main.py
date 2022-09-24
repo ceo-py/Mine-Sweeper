@@ -23,14 +23,13 @@ def game_over_result():
             mine_field[row][col].show_square()
 
 
-def draw_pawns():
+def draw_square():
     for row in range(START_ROW, ROW):
         for col in range(COL):
             window.blit(PICTURES[mine_field[row][col].picture], (col * SIZE, row * SIZE))
 
 
 re_scale_all_pictures()
-
 
 while running:
     pygame.time.Clock().tick(FPS)
@@ -58,7 +57,6 @@ while running:
                 symbol.show_square()
                 symbol.open_field = True
 
-
-    draw_pawns()
+    draw_square()
     pygame.display.update()
 pygame.quit()
