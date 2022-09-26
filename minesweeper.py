@@ -4,7 +4,7 @@ import os
 ROW = 11
 COL = 9
 START_ROW = 2
-BOMB_NUMBER = 3
+BOMB_NUMBER = 10
 field_to_explore = []
 CURRENT_PATH = os.getcwd()
 PICTURES = {}
