@@ -39,9 +39,7 @@ def generate_bombs(mine_field):
         bomb_pos = [random.randrange(START_ROW, ROW), random.randrange(0, COL)]
         if bomb_pos not in bombs_pos:
             bombs_pos.append(bomb_pos)
-
-    for row, col in bombs_pos:
-        mine_field[row][col] = "*"
+            mine_field[bomb_pos[0]][bomb_pos[1]] = "*"
     return mine_field
 
 
@@ -62,17 +60,15 @@ def check_for_bombs_in_range(mine_field):
 
 def open_zero_field(row, col):
     if check_valid_index(row, col) and mine_field[row][col].name == 0 and mine_field[row][col].visited == "No":
+        mine_field[row][col].picture = mine_field[row][col].name
+        mine_field[row][col].visited = "Yes"
+        mine_field[row][col].open_field = True
         for d_row, d_col in directions.values():
             c_row, c_cow = row + d_row, col + d_col
             if check_valid_index(c_row, c_cow) and isinstance(mine_field[c_row][c_cow].name, int) \
                     and mine_field[c_row][c_cow].name > 0:
                 mine_field[c_row][c_cow].picture = mine_field[c_row][c_cow].name
-                mine_field[row][col].visited = "Yes"
                 mine_field[c_row][c_cow].open_field = True
-
-        mine_field[row][col].picture = mine_field[row][col].name
-        mine_field[row][col].visited = "Yes"
-        mine_field[row][col].open_field = True
         [open_zero_field(row, col) for row, col in
          ((row, col + 1), (row, col - 1), (row + 1, col), (row - 1, col))]
 

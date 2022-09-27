@@ -30,6 +30,11 @@ def check_for_game_winner():
     return squares_un_open
 
 
+def change_reset_button(status):
+    for x in range(2):
+        mine_field[x][4].picture = status
+
+
 def game_over_result(show=True):
     for row in range(START_ROW, ROW):
         for col in range(COL):
@@ -73,8 +78,7 @@ while running:
                     continue
                 if symbol.name == "unclicked_bomb":
                     symbol.name = "clicked_bomb"
-                    mine_field[0][4].picture = "square_death"
-                    mine_field[1][4].picture = "square_death"
+                    change_reset_button("square_death")
                     game_over_result()
 
                 elif symbol.name == 0:
@@ -89,8 +93,7 @@ while running:
                 symbol.open_field = True
 
     if check_for_game_winner() == BOMB_NUMBER:
-        mine_field[0][4].picture = "square_winner"
-        mine_field[1][4].picture = "square_winner"
+        change_reset_button("square_winner")
         game_over_result(False)
 
     draw_square()
