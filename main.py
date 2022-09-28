@@ -8,8 +8,8 @@ FPS = 60
 WIDTH = 400
 HEIGHT = 400
 MAIN_FONT = pygame.font.SysFont("comicsans", 50)
-SIZE_R = WIDTH / ROW
-SIZE_C = WIDTH / COL
+SIZE_R = WIDTH // ROW
+SIZE_C = WIDTH // COL
 pygame.display.set_caption("Minesweeper beta v0.000000000000001")
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 running = True
@@ -65,7 +65,7 @@ while running:
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN:
             left_click, middle_click, right_click = pygame.mouse.get_pressed()
-            col, row = [int(x // size) for x, size in zip(pygame.mouse.get_pos(), [SIZE_C, SIZE_R])]
+            col, row = [x // size for x, size in zip(pygame.mouse.get_pos(), [SIZE_C, SIZE_R])]
             symbol = mine_field[row][col]
             if symbol.name == "Blank":
                 continue
