@@ -14,6 +14,7 @@ SIZE_C = WIDTH // COL
 pygame.display.set_caption("Minesweeper beta v0.000000000000001")
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 running = True
+winner = False
 mine_field = start_game()
 starting_time = time.time()
 
@@ -68,7 +69,6 @@ def draw_square():
     draw_time_counter()
 
 
-
 re_scale_all_pictures()
 
 
@@ -93,11 +93,11 @@ while running:
                 if symbol.got_flag:
                     continue
 
-                elif symbol.open_field:
+                elif symbol.open_field and not winner:
                     wrong_flag, row, col = open_available_square(row, col, *show_available_moves(row, col))
                     symbol = mine_field[row][col]
 
-                if symbol.name == "unclicked_bomb" or wrong_flag == "Bomb":
+                if symbol.name == "unclicked_bomb" and not winner or wrong_flag == "Bomb":
                     symbol.name = "clicked_bomb"
                     change_reset_button("square_death")
                     game_over_result()
@@ -110,12 +110,15 @@ while running:
                     mine_field = start_game()
                     re_scale_all_pictures()
                     starting_time = time.time()
+                    winner = False
 
-                symbol.show_square()
-                symbol.open_field = True
+                if not winner:
+                    symbol.show_square()
+                    symbol.open_field = True
 
     if check_for_game_winner() == BOMB_NUMBER:
         change_reset_button("square_winner")
+        winner = True
         game_over_result(False)
 
     draw_square()

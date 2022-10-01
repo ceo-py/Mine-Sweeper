@@ -88,12 +88,6 @@ def show_available_moves(row, col):
     return flag_counter, legal_moves
 
 
-
-
-
-
-
-
 def open_zero_field(row, col):
     if check_valid_index(row, col) and mine_field[row][col].name == 0 and mine_field[row][col].visited == "No":
         mine_field[row][col].picture = mine_field[row][col].name
