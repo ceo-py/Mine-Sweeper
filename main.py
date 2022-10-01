@@ -52,13 +52,12 @@ def draw_bombs_counter():
     window.blit(score_text, (20, 0))
 
 
-def draw_time_counter(show=True):
-    if show:
-        game_timer = MAIN_FONT.render(str(timer), 1, ("red"))
-        window.blit(game_timer, (300, 0))
+def draw_time_counter():
+    game_timer = MAIN_FONT.render(str(timer), 1, ("red"))
+    window.blit(game_timer, (300, 0))
 
 
-def draw_square():
+def draw_square(show):
     for row in range(ROW):
         for col in range(COL):
             if row in (0, 1) and col == 4:
@@ -74,7 +73,6 @@ re_scale_all_pictures()
 
 while running:
     pygame.time.Clock().tick(FPS)
-    timer = int(time.time() - starting_time)
     wrong_flag = None
     for event in pygame.event.get():
         if event.type == QUIT:
@@ -121,11 +119,14 @@ while running:
                     symbol.show_square()
                     symbol.open_field = True
 
+    if not game_stop:
+        timer = int(time.time() - starting_time)
+
     if check_for_game_winner() == BOMB_NUMBER:
         change_reset_button("square_winner")
         game_stop = True
-        game_over_result(False)
+        game_over_result()
 
-    draw_square()
+    draw_square(game_stop)
     pygame.display.update()
 pygame.quit()
