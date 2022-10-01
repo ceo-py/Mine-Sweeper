@@ -14,7 +14,7 @@ SIZE_C = WIDTH // COL
 pygame.display.set_caption("Minesweeper beta v0.000000000000001")
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 running = True
-winner = False
+game_stop = False
 mine_field = start_game()
 starting_time = time.time()
 
@@ -82,7 +82,10 @@ while running:
         if event.type == pygame.MOUSEBUTTONDOWN:
             left_click, middle_click, right_click = pygame.mouse.get_pressed()
             col, row = [x // size for x, size in zip(pygame.mouse.get_pos(), [SIZE_C, SIZE_R])]
-            symbol = mine_field[row][col]
+            try:
+                symbol = mine_field[row][col]
+            except IndexError:
+                continue
             if symbol.name == "Blank":
                 continue
             if right_click:
@@ -93,12 +96,14 @@ while running:
                 if symbol.got_flag:
                     continue
 
-                elif symbol.open_field and not winner:
+                elif symbol.open_field and not game_stop:
                     wrong_flag, row, col = open_available_square(row, col, *show_available_moves(row, col))
                     symbol = mine_field[row][col]
 
-                if symbol.name == "unclicked_bomb" and not winner or wrong_flag == "Bomb":
+                if symbol.name == "unclicked_bomb" and not game_stop or wrong_flag == "Bomb":
+                    game_stop = True
                     symbol.name = "clicked_bomb"
+                    symbol.show_square()
                     change_reset_button("square_death")
                     game_over_result()
 
@@ -110,15 +115,15 @@ while running:
                     mine_field = start_game()
                     re_scale_all_pictures()
                     starting_time = time.time()
-                    winner = False
+                    game_stop = False
 
-                if not winner:
+                if not game_stop:
                     symbol.show_square()
                     symbol.open_field = True
 
     if check_for_game_winner() == BOMB_NUMBER:
         change_reset_button("square_winner")
-        winner = True
+        game_stop = True
         game_over_result(False)
 
     draw_square()

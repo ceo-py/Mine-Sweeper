@@ -68,6 +68,7 @@ def open_available_square(row, col, flag_counter, legal_moves):
         if target.name == 0:
             open_zero_field(row, col)
         elif target.name == "unclicked_bomb":
+            print(row, col)
             return "Bomb", row, col
     return None, row, col
 
