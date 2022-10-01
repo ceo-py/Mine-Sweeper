@@ -57,7 +57,7 @@ def draw_time_counter():
     window.blit(game_timer, (300, 0))
 
 
-def draw_square(show):
+def draw_square():
     for row in range(ROW):
         for col in range(COL):
             if row in (0, 1) and col == 4:
@@ -127,6 +127,6 @@ while running:
         game_stop = True
         game_over_result()
 
-    draw_square(game_stop)
+    draw_square()
     pygame.display.update()
 pygame.quit()
