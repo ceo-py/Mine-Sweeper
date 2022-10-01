@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import *
 from minesweeper import *
+import time
 
 
 pygame.init()
@@ -8,12 +9,13 @@ FPS = 60
 WIDTH = 400
 HEIGHT = 400
 MAIN_FONT = pygame.font.SysFont("comicsans", 50)
-SIZE_R = WIDTH // ROW
+SIZE_R = HEIGHT // ROW
 SIZE_C = WIDTH // COL
 pygame.display.set_caption("Minesweeper beta v0.000000000000001")
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 running = True
 mine_field = start_game()
+starting_time = time.time()
 
 
 def re_scale_all_pictures():
@@ -44,6 +46,17 @@ def game_over_result(show=True):
                 mine_field[row][col].open_field = True
 
 
+def draw_bombs_counter():
+    score_text = MAIN_FONT.render(str(Figure.flag_counter), 1, ("red"))
+    window.blit(score_text, (20, 0))
+
+
+def draw_time_counter(show=True):
+    if show:
+        game_timer = MAIN_FONT.render(str(timer), 1, ("red"))
+        window.blit(game_timer, (300, 0))
+
+
 def draw_square():
     for row in range(ROW):
         for col in range(COL):
@@ -51,8 +64,9 @@ def draw_square():
                 window.blit(PICTURES[mine_field[row][col].picture], (4 * SIZE_C, 0.5 * SIZE_R))
             else:
                 window.blit(PICTURES[mine_field[row][col].picture], (col * SIZE_C, row * SIZE_R))
-    score_text = MAIN_FONT.render(str(Figure.flag_counter), 1, ("red"))
-    window.blit(score_text, (20, 0))
+    draw_bombs_counter()
+    draw_time_counter()
+
 
 
 re_scale_all_pictures()
@@ -60,6 +74,8 @@ re_scale_all_pictures()
 
 while running:
     pygame.time.Clock().tick(FPS)
+    timer = int(time.time() - starting_time)
+    wrong_flag = None
     for event in pygame.event.get():
         if event.type == QUIT:
             running = False
@@ -74,9 +90,14 @@ while running:
                     symbol.change_flag()
 
             elif left_click:
-                if symbol.got_flag or symbol.open_field:
+                if symbol.got_flag:
                     continue
-                if symbol.name == "unclicked_bomb":
+
+                elif symbol.open_field:
+                    wrong_flag, row, col = open_available_square(row, col, *show_available_moves(row, col))
+                    symbol = mine_field[row][col]
+
+                if symbol.name == "unclicked_bomb" or wrong_flag == "Bomb":
                     symbol.name = "clicked_bomb"
                     change_reset_button("square_death")
                     game_over_result()
@@ -88,6 +109,7 @@ while running:
                     Figure.flag_counter = BOMB_NUMBER
                     mine_field = start_game()
                     re_scale_all_pictures()
+                    starting_time = time.time()
 
                 symbol.show_square()
                 symbol.open_field = True

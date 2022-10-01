@@ -58,6 +58,42 @@ def check_for_bombs_in_range(mine_field):
     return mine_field
 
 
+def open_available_square(row, col, flag_counter, legal_moves):
+    if flag_counter < mine_field[row][col].name:
+        return None, row, col
+    for row, col in legal_moves:
+        target = mine_field[row][col]
+        target.show_square()
+        target.open_field = True
+        if target.name == 0:
+            open_zero_field(row, col)
+        elif target.name == "unclicked_bomb":
+            return "Bomb", row, col
+    return None, row, col
+
+
+def show_available_moves(row, col):
+    legal_moves = []
+    flag_counter = 0
+    for m_row, m_col in directions.values():
+        m_row, m_col = row + m_row, col + m_col
+        if not check_valid_index(m_row, m_col) or m_row in (0, 1):
+            continue
+        symbol = mine_field[m_row][m_col]
+        if not symbol.got_flag and not symbol.open_field:
+            legal_moves.append([m_row, m_col])
+        if symbol.got_flag:
+            flag_counter += 1
+
+    return flag_counter, legal_moves
+
+
+
+
+
+
+
+
 def open_zero_field(row, col):
     if check_valid_index(row, col) and mine_field[row][col].name == 0 and mine_field[row][col].visited == "No":
         mine_field[row][col].picture = mine_field[row][col].name
