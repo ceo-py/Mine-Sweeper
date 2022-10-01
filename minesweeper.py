@@ -60,7 +60,7 @@ def check_for_bombs_in_range(mine_field):
 
 def open_available_square(row, col, flag_counter, legal_moves):
     if flag_counter < mine_field[row][col].name:
-        return None, row, col
+        return None, row, col, legal_moves
     for row, col in legal_moves:
         target = mine_field[row][col]
         target.show_square()
@@ -68,9 +68,8 @@ def open_available_square(row, col, flag_counter, legal_moves):
         if target.name == 0:
             open_zero_field(row, col)
         elif target.name == "unclicked_bomb":
-            print(row, col)
-            return "Bomb", row, col
-    return None, row, col
+            return "Bomb", row, col, []
+    return None, row, col, []
 
 
 def show_available_moves(row, col):
@@ -85,7 +84,6 @@ def show_available_moves(row, col):
             legal_moves.append([m_row, m_col])
         if symbol.got_flag:
             flag_counter += 1
-
     return flag_counter, legal_moves
 
 

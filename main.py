@@ -11,10 +11,11 @@ HEIGHT = 400
 MAIN_FONT = pygame.font.SysFont("comicsans", 50)
 SIZE_R = HEIGHT // ROW
 SIZE_C = WIDTH // COL
-pygame.display.set_caption("Minesweeper beta v0.000000000000001")
+pygame.display.set_caption("Minesweeper beta v0.000000000000002")
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 running = True
 game_stop = False
+show_empty_fields = False
 mine_field = start_game()
 starting_time = time.time()
 
@@ -95,8 +96,12 @@ while running:
                     continue
 
                 elif symbol.open_field and not game_stop:
-                    wrong_flag, row, col = open_available_square(row, col, *show_available_moves(row, col))
+                    show_empty_fields = True
+                    wrong_flag, row, col, legal_moves = open_available_square(row, col, *show_available_moves(row, col))
                     symbol = mine_field[row][col]
+                    for s_row, s_col in legal_moves:
+                        show_element = mine_field[s_row][s_col]
+                        show_element.picture = 0
 
                 if symbol.name == "unclicked_bomb" and not game_stop or wrong_flag == "Bomb":
                     game_stop = True
@@ -118,6 +123,12 @@ while running:
                 if not game_stop:
                     symbol.show_square()
                     symbol.open_field = True
+
+        if event.type == MOUSEBUTTONUP and show_empty_fields:
+            show_empty_fields = False
+            for s_row, s_col in legal_moves:
+                    show_element = mine_field[s_row][s_col]
+                    show_element.picture = "square"
 
     if not game_stop:
         timer = int(time.time() - starting_time)
