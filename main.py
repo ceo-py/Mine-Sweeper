@@ -6,13 +6,14 @@ import time
 
 pygame.init()
 FPS = 60
-WIDTH = 400
-HEIGHT = 400
-MAIN_FONT = pygame.font.SysFont("comicsans", 50)
+WIDTH = 793
+HEIGHT = 793
+
 SIZE_R = HEIGHT // ROW
 SIZE_C = WIDTH // COL
+MAIN_FONT = pygame.font.SysFont("ds-digital", SIZE_R)
 pygame.display.set_caption("Minesweeper beta v0.000000000000002")
-window = pygame.display.set_mode((WIDTH, HEIGHT))
+window = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
 running = True
 game_stop = False
 show_empty_fields = False
@@ -23,6 +24,21 @@ starting_time = time.time()
 def re_scale_all_pictures():
     for key, link in PICTURES.items():
         PICTURES[key] = pygame.transform.scale(pygame.image.load(link), (SIZE_C, SIZE_R))
+
+
+def resize_window_parameters(new_width, new_height):
+    return new_height // ROW, new_width // COL
+
+
+def check_min_window_size(c_width, c_height):
+    change_size = False
+    if c_width < 300:
+        c_width = 300
+        change_size = True
+    if c_height < 300:
+        c_height = 300
+        change_size = True
+    return c_height, c_width, change_size
 
 
 def check_for_game_winner():
@@ -55,7 +71,7 @@ def draw_bombs_counter():
 
 def draw_time_counter():
     game_timer = MAIN_FONT.render(str(timer), 1, ("red"))
-    window.blit(game_timer, (300, 0))
+    window.blit(game_timer, (WIDTH-80, 0))
 
 
 def draw_square():
@@ -75,12 +91,24 @@ re_scale_all_pictures()
 while running:
     pygame.time.Clock().tick(FPS)
     wrong_flag = None
+    c_width, c_height = window.get_size()
+
+    if c_height != HEIGHT or c_width != WIDTH:
+        HEIGHT, WIDTH, change_size = check_min_window_size(c_width, c_height)
+        if change_size:
+            window = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
+        SIZE_R, SIZE_C = resize_window_parameters(WIDTH, HEIGHT)
+        MAIN_FONT = pygame.font.SysFont("ds-digital", SIZE_R)
+        window.fill("Black")
+        load_pictures()
+        re_scale_all_pictures()
+
     for event in pygame.event.get():
         if event.type == QUIT:
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN:
             left_click, middle_click, right_click = pygame.mouse.get_pressed()
-            col, row = [x // size for x, size in zip(pygame.mouse.get_pos(), [SIZE_C, SIZE_R])]
+            col, row = [int(x // size) for x, size in zip(pygame.mouse.get_pos(), [SIZE_C, SIZE_R])]
             try:
                 symbol = mine_field[row][col]
             except IndexError:
