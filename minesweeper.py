@@ -3,6 +3,11 @@ import os
 
 ROW = 11
 COL = 9
+'''
+ 9x9 10 mines,
+ Intermediate 16x16 40 mines,
+ Expert 30x16 board with 99 mines
+'''
 START_ROW = 2
 BOMB_NUMBER = 10
 field_to_explore = []

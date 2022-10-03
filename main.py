@@ -61,6 +61,9 @@ def game_over_result(show=True):
             if not mine_field[row][col].open_field:
                 if show:
                     mine_field[row][col].show_square()
+                else:
+                    mine_field[row][col].picture = "flag"
+
                 mine_field[row][col].open_field = True
 
 
@@ -164,7 +167,7 @@ while running:
     if check_for_game_winner() == BOMB_NUMBER:
         change_reset_button("square_winner")
         game_stop = True
-        game_over_result()
+        game_over_result(False)
 
     draw_square()
     pygame.display.update()
