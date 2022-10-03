@@ -69,15 +69,18 @@ def game_over_result(show=True):
             check_square = mine_field[row][col]
             if check_square.open_field:
                 continue
+            check_square.open_field = True
             if show:
                 if check_square.name != "unclicked_bomb" and check_square.got_flag:
-                    print("INside")
                     check_square.name = "flag_wrong"
-                check_square.show_square()
-            else:
-                check_square.picture = "flag"
+                    check_square.show_square()
+                elif check_square.name == "unclicked_bomb":
+                    check_square.show_square()
 
-            check_square.open_field = True
+            else:
+                if check_square.name == "unclicked_bomb":
+                    check_square.picture = "flag"
+                    check_square.show_square()
 
 
 def draw_bombs_counter():

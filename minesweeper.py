@@ -99,7 +99,11 @@ def open_zero_field(row, col):
         mine_field[row][col].open_field = True
         for d_row, d_col in directions.values():
             c_row, c_cow = row + d_row, col + d_col
-            if check_valid_index(c_row, c_cow) and isinstance(mine_field[c_row][c_cow].name, int) \
+            if not check_valid_index(c_row, c_cow):
+                continue
+            if mine_field[c_row][c_cow].name == 0:
+                open_zero_field(c_row, c_cow)
+            elif isinstance(mine_field[c_row][c_cow].name, int) \
                     and mine_field[c_row][c_cow].name > 0:
                 mine_field[c_row][c_cow].picture = mine_field[c_row][c_cow].name
                 mine_field[c_row][c_cow].open_field = True
