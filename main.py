@@ -41,6 +41,14 @@ def check_min_window_size(c_width, c_height):
     return c_height, c_width, change_size
 
 
+def clicked_on_bomb(symbol, bomb_pic):
+    symbol.name = bomb_pic
+    symbol.show_square()
+    change_reset_button("square_death")
+    game_over_result()
+    return True
+
+
 def check_for_game_winner():
     squares_un_open = 0
     for row in range(START_ROW, ROW):
@@ -58,13 +66,18 @@ def change_reset_button(status):
 def game_over_result(show=True):
     for row in range(START_ROW, ROW):
         for col in range(COL):
-            if not mine_field[row][col].open_field:
-                if show:
-                    mine_field[row][col].show_square()
-                else:
-                    mine_field[row][col].picture = "flag"
+            check_square = mine_field[row][col]
+            if check_square.open_field:
+                continue
+            if show:
+                if check_square.name != "unclicked_bomb" and check_square.got_flag:
+                    print("INside")
+                    check_square.name = "flag_wrong"
+                check_square.show_square()
+            else:
+                check_square.picture = "flag"
 
-                mine_field[row][col].open_field = True
+            check_square.open_field = True
 
 
 def draw_bombs_counter():
@@ -135,11 +148,7 @@ while running:
                         show_element.picture = 0
 
                 if symbol.name == "unclicked_bomb" and not game_stop or wrong_flag == "Bomb":
-                    game_stop = True
-                    symbol.name = "clicked_bomb"
-                    symbol.show_square()
-                    change_reset_button("square_death")
-                    game_over_result()
+                    game_stop = clicked_on_bomb(symbol, "clicked_bomb")
 
                 elif symbol.name == 0:
                     open_zero_field(row, col)
