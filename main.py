@@ -76,11 +76,11 @@ def game_over_result(show=True):
                     check_square.show_square()
                 elif check_square.name == "unclicked_bomb":
                     check_square.show_square()
+                    continue
 
-            else:
-                if check_square.name == "unclicked_bomb":
-                    check_square.picture = "flag"
-                    check_square.show_square()
+            if check_square.name == "unclicked_bomb":
+                check_square.name = "flag"
+                check_square.show_square()
 
 
 def draw_bombs_counter():
