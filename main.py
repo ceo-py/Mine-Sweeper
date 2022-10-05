@@ -140,7 +140,7 @@ def draw_bombs_counter():
 def draw_time_counter():
     # get_size = (HEIGHT / COL) * 3
     game_timer = pygame.font.SysFont("ds-digital", SIZE_R*3).render(f"{timer:03d}", 1, ("red"))
-    window.blit(game_timer, (WIDTH - SIZE_C*3, 0))
+    window.blit(game_timer, (WIDTH - SIZE_R*3*1.2, 0))
 
 
 def draw_square():
