@@ -164,9 +164,6 @@ class Figure:
 def create_table(mine_field):
     for row in range(ROW):
         for col in range(COL):
-            # if row in (0, 1) and col == 4:
-            #     mine_field[row][col] = Figure("Menu")
-            #     mine_field[row][col].picture = "square_restart"
 
             if row < START_ROW:
                 mine_field[row][col] = Figure("Blank")

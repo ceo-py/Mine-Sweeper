@@ -240,7 +240,7 @@ while running:
 
     if not game_stop:
         timer = int(time.time() - starting_time)
-    print(check_for_game_winner(), BOMB_NUMBER)
+
     if check_for_game_winner() == BOMB_NUMBER:
         BUTTON_STATE = "square_winner"
         game_stop = True
