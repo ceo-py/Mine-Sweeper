@@ -3,12 +3,11 @@ from pygame.locals import *
 from minesweeper import *
 import time
 
-
 pygame.init()
 FPS = 60
 WIDTH = 793
 HEIGHT = 793
-
+BUTTON_STATE = "square_restart"
 SIZE_R = HEIGHT // ROW
 SIZE_C = WIDTH // COL
 MAIN_FONT = pygame.font.SysFont("ds-digital", SIZE_R)
@@ -54,7 +53,6 @@ def game_menu():
 
     print(rect_, rect_.collidepoint(mouse_pos))
 
-
     if rect_.collidepoint(mouse_pos) and pygame.mouse.get_pressed()[0]:
         type_game = "beginner"
         return False, type_game
@@ -70,8 +68,17 @@ def game_menu():
     return True, None
 
 
+def reset_button_state():
+    # size_i = PICTURES[BUTTON_STATE].get_rect(center=(WIDTH / 2, SIZE_R))
+    # pygame.draw.rect(window, "BLUE", size_i, 4)
+    window.blit(PICTURES[BUTTON_STATE], (WIDTH / 2 - SIZE_C, 0))
+
+
 def re_scale_all_pictures():
     for key, link in PICTURES.items():
+        if key in ("square_restart", "square_death", "square_winner"):
+            PICTURES[key] = pygame.transform.scale(pygame.image.load(link), (SIZE_C * 2, SIZE_R * 2))
+            continue
         PICTURES[key] = pygame.transform.scale(pygame.image.load(link), (SIZE_C, SIZE_R))
 
 
@@ -93,7 +100,7 @@ def check_min_window_size(c_width, c_height):
 def clicked_on_bomb(symbol, bomb_pic):
     symbol.name = bomb_pic
     symbol.show_square()
-    change_reset_button("square_death")
+    # change_reset_button("square_death")
     game_over_result()
     return True
 
@@ -105,11 +112,6 @@ def check_for_game_winner():
             if not mine_field[row][col].open_field:
                 squares_un_open += 1
     return squares_un_open
-
-
-def change_reset_button(status):
-    for x in range(2):
-        mine_field[x][4].picture = status
 
 
 def game_over_result(show=True):
@@ -133,14 +135,14 @@ def game_over_result(show=True):
 
 
 def draw_bombs_counter():
-    score_text = pygame.font.SysFont("ds-digital", SIZE_R*3).render(f"{Figure.flag_counter:03d}", 1, ("red"))
+    score_text = pygame.font.SysFont("ds-digital", SIZE_R * 3).render(f"{Figure.flag_counter:03d}", 1, ("red"))
     window.blit(score_text, (0, 0))
 
 
 def draw_time_counter():
     # get_size = (HEIGHT / COL) * 3
-    game_timer = pygame.font.SysFont("ds-digital", SIZE_R*3).render(f"{timer:03d}", 1, ("red"))
-    window.blit(game_timer, (WIDTH - SIZE_R*3*1.2, 0))
+    game_timer = pygame.font.SysFont("ds-digital", SIZE_R * 3).render(f"{timer:03d}", 1, ("red"))
+    window.blit(game_timer, (WIDTH - SIZE_R * 3 * 1.2, 0))
 
 
 def draw_square():
@@ -151,12 +153,13 @@ def draw_square():
                 window.blit(PICTURES[mine_field[row][col].picture], (4 * SIZE_C, 0.5 * SIZE_R))
             else:
                 window.blit(PICTURES[mine_field[row][col].picture], (col * SIZE_C, row * SIZE_R))
+
+    reset_button_state()
     draw_bombs_counter()
     draw_time_counter()
 
 
 re_scale_all_pictures()
-
 
 while running:
     pygame.time.Clock().tick(FPS)
@@ -172,6 +175,7 @@ while running:
         if not menu:
             mine_field = start_game(type_game)
             Figure.flag_counter = GAME_DIFFICULTY[type_game]["bombs"]
+            BOMB_NUMBER = GAME_DIFFICULTY[type_game]["bombs"]
             ROW, COL = len(mine_field), len(mine_field[0])
             SIZE_R = HEIGHT // ROW
             SIZE_C = WIDTH // COL
@@ -218,15 +222,11 @@ while running:
                         show_element.picture = 0
 
                 if symbol.name == "unclicked_bomb" and not game_stop or wrong_flag == "Bomb":
+                    BUTTON_STATE = "square_death"
                     game_stop = clicked_on_bomb(symbol, "clicked_bomb")
 
                 elif symbol.name == 0 and not game_stop:
                     open_zero_field(row, col)
-
-                elif symbol.name == "Menu":
-                    menu = True
-                    starting_time = time.time()
-                    game_stop = False
 
                 if not game_stop:
                     symbol.show_square()
@@ -235,18 +235,25 @@ while running:
         if event.type == MOUSEBUTTONUP and show_empty_fields:
             show_empty_fields = False
             for s_row, s_col in legal_moves:
-                    show_element = mine_field[s_row][s_col]
-                    show_element.picture = "square"
+                show_element = mine_field[s_row][s_col]
+                show_element.picture = "square"
 
     if not game_stop:
         timer = int(time.time() - starting_time)
-
+    print(check_for_game_winner(), BOMB_NUMBER)
     if check_for_game_winner() == BOMB_NUMBER:
-        change_reset_button("square_winner")
+        BUTTON_STATE = "square_winner"
         game_stop = True
         game_over_result(False)
 
     if not menu:
         draw_square()
+
+    if PICTURES[BUTTON_STATE].get_rect(center=(WIDTH / 2, SIZE_R)).collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0]:
+        menu = True
+        BUTTON_STATE = "square_restart"
+        starting_time = time.time()
+        game_stop = False
+
     pygame.display.update()
 pygame.quit()
