@@ -10,6 +10,17 @@ COL = 9
 '''
 START_ROW = 2
 BOMB_NUMBER = 10
+GAME_DIFFICULTY = {
+    "beginner": {
+        "row": 11, "col": 9, "bombs": 10
+    },
+    "intermediate": {
+        "row": 18, "col": 16, "bombs": 40
+    },
+    "expert": {
+        "row": 30, "col": 16, "bombs": 99
+    },
+}
 field_to_explore = []
 CURRENT_PATH = os.getcwd()
 PICTURES = {}
@@ -29,9 +40,9 @@ def load_pictures():
             continue
         digit = file_name[-5]
         if digit.isdigit():
-            PICTURES[int(digit)] = f"{os.getcwd()}\pictures\{file_name}"
+            PICTURES[int(digit)] = f"{CURRENT_PATH}\pictures\{file_name}"
         else:
-            PICTURES[file_name[:-4]] = f"{os.getcwd()}\pictures\{file_name}"
+            PICTURES[file_name[:-4]] = f"{CURRENT_PATH}\pictures\{file_name}"
 
 
 def check_valid_index(row, col):
@@ -111,8 +122,9 @@ def open_zero_field(row, col):
          ((row, col + 1), (row, col - 1), (row + 1, col), (row - 1, col))]
 
 
-def start_game():
-    global mine_field
+def start_game(dificulty):
+    global mine_field, ROW, COL, BOMB_NUMBER
+    ROW, COL, BOMB_NUMBER = GAME_DIFFICULTY[dificulty].values()
     mine_field = create_empty_matrix()
     load_pictures()
     mine_field = generate_bombs(mine_field)

@@ -14,11 +14,60 @@ SIZE_C = WIDTH // COL
 MAIN_FONT = pygame.font.SysFont("ds-digital", SIZE_R)
 pygame.display.set_caption("Minesweeper beta v0.000000000000002")
 window = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
+BACKGROUND = pygame.transform.scale(pygame.image.load(f"{CURRENT_PATH}\pictures\\bg.png"), (WIDTH, HEIGHT))
+BEGINNER = pygame.transform.scale(pygame.image.load(f"{CURRENT_PATH}\pictures\\beginner.png"), (200, 100))
 running = True
 game_stop = False
 show_empty_fields = False
-mine_field = start_game()
+mine_field = start_game("beginner")
 starting_time = time.time()
+menu = True
+
+
+def game_menu():
+    mouse_pos = pygame.mouse.get_pos()
+    window.fill("Black")
+    window.blit(BACKGROUND, (0, 0))
+    # window.blit(BEGINNER, (50, 150))
+    window.blit(BEGINNER, (315, 150))
+    window.blit(BEGINNER, (580, 150))
+
+    beginner_ = MAIN_FONT.render("BEGINNER", 1, ("red"))
+    window.blit(beginner_, (50, 150))
+    # beginner
+    size_ = beginner_.get_rect(center=(50, 150))
+    rect_ = beginner_.get_rect(center=(140, 166))
+
+    # intermediate
+
+    size_i = BEGINNER.get_rect(center=(315, 150))
+    rect_i = BEGINNER.get_rect(center=(415, 200))
+
+    # expert
+
+    size_e = BEGINNER.get_rect(center=(580, 150))
+    rect_e = BEGINNER.get_rect(center=(680, 200))
+
+    pygame.draw.rect(window, "BLUE", rect_, 4)
+    pygame.draw.rect(window, "BLUE", rect_i, 4)
+    pygame.draw.rect(window, "BLUE", rect_e, 4)
+
+    print(rect_, rect_.collidepoint(mouse_pos))
+
+
+    if rect_.collidepoint(mouse_pos) and pygame.mouse.get_pressed()[0]:
+        type_game = "beginner"
+        return False, type_game
+
+    elif rect_i.collidepoint(mouse_pos) and pygame.mouse.get_pressed()[0]:
+        type_game = "intermediate"
+        return False, type_game
+
+    elif rect_e.collidepoint(mouse_pos) and pygame.mouse.get_pressed()[0]:
+        type_game = "expert"
+        return False, type_game
+
+    return True, None
 
 
 def re_scale_all_pictures():
@@ -84,16 +133,18 @@ def game_over_result(show=True):
 
 
 def draw_bombs_counter():
-    score_text = MAIN_FONT.render(str(Figure.flag_counter), 1, ("red"))
-    window.blit(score_text, (20, 0))
+    score_text = pygame.font.SysFont("ds-digital", SIZE_R*3).render(f"{Figure.flag_counter:03d}", 1, ("red"))
+    window.blit(score_text, (0, 0))
 
 
 def draw_time_counter():
-    game_timer = MAIN_FONT.render(str(timer), 1, ("red"))
-    window.blit(game_timer, (WIDTH-80, 0))
+    # get_size = (HEIGHT / COL) * 3
+    game_timer = pygame.font.SysFont("ds-digital", SIZE_R*3).render(f"{timer:03d}", 1, ("red"))
+    window.blit(game_timer, (WIDTH - SIZE_C*3, 0))
 
 
 def draw_square():
+    window.fill("Black")
     for row in range(ROW):
         for col in range(COL):
             if row in (0, 1) and col == 4:
@@ -112,19 +163,35 @@ while running:
     wrong_flag = None
     c_width, c_height = window.get_size()
 
+    if menu:
+        menu, type_game = game_menu()
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                running = False
+                continue
+        if not menu:
+            mine_field = start_game(type_game)
+            Figure.flag_counter = GAME_DIFFICULTY[type_game]["bombs"]
+            ROW, COL = len(mine_field), len(mine_field[0])
+            SIZE_R = HEIGHT // ROW
+            SIZE_C = WIDTH // COL
+            load_pictures()
+            re_scale_all_pictures()
+
     if c_height != HEIGHT or c_width != WIDTH:
         HEIGHT, WIDTH, change_size = check_min_window_size(c_width, c_height)
         if change_size:
             window = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
         SIZE_R, SIZE_C = resize_window_parameters(WIDTH, HEIGHT)
         MAIN_FONT = pygame.font.SysFont("ds-digital", SIZE_R)
-        window.fill("Black")
         load_pictures()
         re_scale_all_pictures()
 
     for event in pygame.event.get():
         if event.type == QUIT:
             running = False
+        if menu:
+            break
         if event.type == pygame.MOUSEBUTTONDOWN:
             left_click, middle_click, right_click = pygame.mouse.get_pressed()
             col, row = [int(x // size) for x, size in zip(pygame.mouse.get_pos(), [SIZE_C, SIZE_R])]
@@ -153,13 +220,11 @@ while running:
                 if symbol.name == "unclicked_bomb" and not game_stop or wrong_flag == "Bomb":
                     game_stop = clicked_on_bomb(symbol, "clicked_bomb")
 
-                elif symbol.name == 0:
+                elif symbol.name == 0 and not game_stop:
                     open_zero_field(row, col)
 
                 elif symbol.name == "Menu":
-                    Figure.flag_counter = BOMB_NUMBER
-                    mine_field = start_game()
-                    re_scale_all_pictures()
+                    menu = True
                     starting_time = time.time()
                     game_stop = False
 
@@ -181,6 +246,7 @@ while running:
         game_stop = True
         game_over_result(False)
 
-    draw_square()
+    if not menu:
+        draw_square()
     pygame.display.update()
 pygame.quit()
