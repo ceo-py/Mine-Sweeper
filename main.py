@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import *
 from minesweeper import *
+import json
 import time
 
 pygame.init()
@@ -10,7 +11,7 @@ HEIGHT = 793
 BUTTON_STATE = "square_restart"
 SIZE_R = HEIGHT // ROW
 SIZE_C = WIDTH // COL
-MAIN_FONT = pygame.font.SysFont("ds-digital", SIZE_R)
+MAIN_FONT = pygame.font.SysFont("ds-digital", int(SIZE_R))
 pygame.display.set_caption("Minesweeper beta v0.000000000000002")
 window = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
 BACKGROUND = pygame.transform.scale(pygame.image.load(f"{CURRENT_PATH}\pictures\\bg.png"), (WIDTH, HEIGHT))
@@ -20,12 +21,16 @@ game_stop = False
 show_empty_fields = False
 mine_field = start_game("beginner")
 starting_time = time.time()
+timer = 0
+click_counter = 0
+PLAYER_NAME = "ANONYMOUS"
 menu = True
 
 
 def game_menu():
     mouse_pos = pygame.mouse.get_pos()
-    window.fill("Black")
+    left_click, *_ = pygame.mouse.get_pressed()
+    window.fill("Grey")
     window.blit(BACKGROUND, (0, 0))
     # window.blit(BEGINNER, (50, 150))
     window.blit(BEGINNER, (315, 150))
@@ -51,22 +56,28 @@ def game_menu():
     pygame.draw.rect(window, "BLUE", rect_i, 4)
     pygame.draw.rect(window, "BLUE", rect_e, 4)
 
-    print(rect_, rect_.collidepoint(mouse_pos))
-
-    if rect_.collidepoint(mouse_pos) and pygame.mouse.get_pressed()[0]:
+    if rect_.collidepoint(mouse_pos) and left_click:
         type_game = "beginner"
         return False, type_game
 
-    elif rect_i.collidepoint(mouse_pos) and pygame.mouse.get_pressed()[0]:
+    elif rect_i.collidepoint(mouse_pos) and left_click:
         type_game = "intermediate"
         return False, type_game
 
-    elif rect_e.collidepoint(mouse_pos) and pygame.mouse.get_pressed()[0]:
+    elif rect_e.collidepoint(mouse_pos) and left_click:
         type_game = "expert"
         return False, type_game
 
     return True, None
 
+
+def high_score(game_type):
+    with open("high_score.json", "r+", encoding='utf-8') as json_file:
+        result = json.load(json_file)
+        result[game_type].append({"player": PLAYER_NAME, "time": timer, "mouse clicks": click_counter})
+        [print(f"{show['player']} - {show['time']}") for show in sorted(result[game_type], key= lambda x: (x['time'], x['mouse clicks'], x['player']))[:8]]
+        json_file.seek(0)
+        json.dump(result, json_file, indent=9)
 
 def reset_button_state():
     # size_i = PICTURES[BUTTON_STATE].get_rect(center=(WIDTH / 2, SIZE_R))
@@ -83,7 +94,7 @@ def re_scale_all_pictures():
 
 
 def resize_window_parameters(new_width, new_height):
-    return new_height // ROW, new_width // COL
+    return new_height / ROW, new_width / COL
 
 
 def check_min_window_size(c_width, c_height):
@@ -100,7 +111,6 @@ def check_min_window_size(c_width, c_height):
 def clicked_on_bomb(symbol, bomb_pic):
     symbol.name = bomb_pic
     symbol.show_square()
-    # change_reset_button("square_death")
     game_over_result()
     return True
 
@@ -135,24 +145,25 @@ def game_over_result(show=True):
 
 
 def draw_bombs_counter():
-    score_text = pygame.font.SysFont("ds-digital", SIZE_R * 3).render(f"{Figure.flag_counter:03d}", 1, ("red"))
+    score_text = pygame.font.SysFont("ds-digital", int(SIZE_R * 3)).render(f"{Figure.flag_counter:03d}", 1, ("red"))
     window.blit(score_text, (0, 0))
 
 
 def draw_time_counter():
     # get_size = (HEIGHT / COL) * 3
-    game_timer = pygame.font.SysFont("ds-digital", SIZE_R * 3).render(f"{timer:03d}", 1, ("red"))
+    game_timer = pygame.font.SysFont("ds-digital", int(SIZE_R * 3)).render(f"{timer:03d}", 1, ("red"))
+
+    # size_e = game_timer.get_rect(center=(WIDTH - SIZE_R * 3 * 1.2, 0))
+    #
+    # pygame.draw.rect(window, "BLUE", size_e, 4)
     window.blit(game_timer, (WIDTH - SIZE_R * 3 * 1.2, 0))
 
 
 def draw_square():
-    window.fill("Black")
-    for row in range(ROW):
+    window.fill("Grey")
+    for row in range(2, ROW):
         for col in range(COL):
-            if row in (0, 1) and col == 4:
-                window.blit(PICTURES[mine_field[row][col].picture], (4 * SIZE_C, 0.5 * SIZE_R))
-            else:
-                window.blit(PICTURES[mine_field[row][col].picture], (col * SIZE_C, row * SIZE_R))
+            window.blit(PICTURES[mine_field[row][col].picture], (col * SIZE_C, row * SIZE_R))
 
     reset_button_state()
     draw_bombs_counter()
@@ -187,7 +198,7 @@ while running:
         if change_size:
             window = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
         SIZE_R, SIZE_C = resize_window_parameters(WIDTH, HEIGHT)
-        MAIN_FONT = pygame.font.SysFont("ds-digital", SIZE_R)
+        MAIN_FONT = pygame.font.SysFont("ds-digital", int(SIZE_R))
         load_pictures()
         re_scale_all_pictures()
 
@@ -210,8 +221,13 @@ while running:
                     symbol.change_flag()
 
             elif left_click:
+                click_counter += 1
+
                 if symbol.got_flag:
                     continue
+
+                if click_counter == 1:
+                    starting_time = time.time()
 
                 elif symbol.open_field and not game_stop:
                     show_empty_fields = True
@@ -238,13 +254,16 @@ while running:
                 show_element = mine_field[s_row][s_col]
                 show_element.picture = "square"
 
-    if not game_stop:
+    if not game_stop and click_counter > 0:
         timer = int(time.time() - starting_time)
 
     if check_for_game_winner() == BOMB_NUMBER:
+        print(type_game)
         BUTTON_STATE = "square_winner"
+        print(click_counter, timer)
         game_stop = True
         game_over_result(False)
+        high_score(type_game)
 
     if not menu:
         draw_square()
@@ -252,7 +271,7 @@ while running:
     if PICTURES[BUTTON_STATE].get_rect(center=(WIDTH / 2, SIZE_R)).collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0]:
         menu = True
         BUTTON_STATE = "square_restart"
-        starting_time = time.time()
+        timer, click_counter = 0, 0
         game_stop = False
 
     pygame.display.update()
