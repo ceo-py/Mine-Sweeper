@@ -14,7 +14,6 @@ SIZE_C = WIDTH // COL
 MAIN_FONT = pygame.font.SysFont("ds-digital", int(SIZE_R))
 pygame.display.set_caption("Minesweeper beta v0.000000000000002")
 window = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
-BACKGROUND = pygame.transform.scale(pygame.image.load(f"{CURRENT_PATH}\pictures\\bg.png"), (WIDTH, HEIGHT))
 BEGINNER = pygame.transform.scale(pygame.image.load(f"{CURRENT_PATH}\pictures\\beginner.png"), (200, 100))
 running = True
 game_stop = False
@@ -23,61 +22,97 @@ mine_field = start_game("beginner")
 starting_time = time.time()
 timer = 0
 click_counter = 0
-PLAYER_NAME = "ANONYMOUS"
+PLAYER_NAME = "anonymous"
 menu = True
+user_name = MAIN_FONT.render(PLAYER_NAME, 1, ("red"))
+high_score_board = {}
+
+
+def show_high_score():
+    a = 0.65
+    for game_type in high_score_board:
+        for score in high_score_board[game_type]:
+            if game_type == "beginner":
+                button_show(score, "green", WIDTH * 0.33, HEIGHT * a)
+                a += 0.05
+
+
+def load_high_score(result):
+    for game in result:
+        for show in sorted(result[game], key=lambda x: (x['time'], x['mouse clicks'], x['player']))[:8]:
+            high_score_board[game] = high_score_board.get(game, []) + [f"{show['player']} - {show['time']}"]
+
+
+def button_show(text, color, pos_row, pos_col):
+    mouse_pos = pygame.mouse.get_pos()
+    text_font = pygame.font.SysFont("ds-digital", int(SIZE_R))
+    user_name = text_font.render(text, 1, (color))
+    rect_collide = user_name.get_rect(center=(pos_row, pos_col))
+    if rect_collide.collidepoint(mouse_pos):
+        user_name = text_font.render(text, 1, ("blue"))
+
+
+    window.blit(user_name, rect_collide)
+
+    # pygame.draw.rect(window, "BLUE", rect_collide, 4)
+    return rect_collide
 
 
 def game_menu():
     mouse_pos = pygame.mouse.get_pos()
     left_click, *_ = pygame.mouse.get_pressed()
     window.fill("Grey")
+    BACKGROUND = pygame.transform.scale(pygame.image.load(f"{CURRENT_PATH}\pictures\\bg.png"), (WIDTH, HEIGHT))
+
     window.blit(BACKGROUND, (0, 0))
-    # window.blit(BEGINNER, (50, 150))
-    window.blit(BEGINNER, (315, 150))
-    window.blit(BEGINNER, (580, 150))
 
-    beginner_ = MAIN_FONT.render("BEGINNER", 1, ("red"))
-    window.blit(beginner_, (50, 150))
-    # beginner
-    size_ = beginner_.get_rect(center=(50, 150))
-    rect_ = beginner_.get_rect(center=(140, 166))
+    button_show(PLAYER_NAME, "red", WIDTH / 2, HEIGHT * 0.05)
 
-    # intermediate
+    beginner_pos = button_show("Beginner", "green", WIDTH * 0.16, HEIGHT * 0.35)
+    intermediate = button_show("Intermediate", "yellow", WIDTH * 0.55, HEIGHT * 0.35)
+    expert = button_show("Expert", "red", WIDTH * 0.85, HEIGHT * 0.35)
 
-    size_i = BEGINNER.get_rect(center=(315, 150))
-    rect_i = BEGINNER.get_rect(center=(415, 200))
+    show_high_score()
 
-    # expert
-
-    size_e = BEGINNER.get_rect(center=(580, 150))
-    rect_e = BEGINNER.get_rect(center=(680, 200))
-
-    pygame.draw.rect(window, "BLUE", rect_, 4)
-    pygame.draw.rect(window, "BLUE", rect_i, 4)
-    pygame.draw.rect(window, "BLUE", rect_e, 4)
-
-    if rect_.collidepoint(mouse_pos) and left_click:
+    if beginner_pos.collidepoint(mouse_pos) and left_click:
         type_game = "beginner"
         return False, type_game
 
-    elif rect_i.collidepoint(mouse_pos) and left_click:
+    elif intermediate.collidepoint(mouse_pos) and left_click:
         type_game = "intermediate"
         return False, type_game
 
-    elif rect_e.collidepoint(mouse_pos) and left_click:
+    elif expert.collidepoint(mouse_pos) and left_click:
         type_game = "expert"
         return False, type_game
 
     return True, None
 
 
-def high_score(game_type):
+def typing_name(event, PLAYER_NAME):
+    if event.type == pygame.KEYDOWN:
+        letters = len(PLAYER_NAME)
+        if event.key == pygame.K_BACKSPACE:
+            if letters != 0:
+                PLAYER_NAME = PLAYER_NAME[:-1]
+        else:
+            if letters < 9 and event.unicode.isascii() and event.key != pygame.K_RETURN:
+                PLAYER_NAME += event.unicode
+    return PLAYER_NAME
+
+
+def high_score(game_type, show_result=False):
     with open("high_score.json", "r+", encoding='utf-8') as json_file:
         result = json.load(json_file)
+        if show_result:
+            return load_high_score(result)
         result[game_type].append({"player": PLAYER_NAME, "time": timer, "mouse clicks": click_counter})
-        [print(f"{show['player']} - {show['time']}") for show in sorted(result[game_type], key= lambda x: (x['time'], x['mouse clicks'], x['player']))[:8]]
+        [print(f"{show['player']} - {show['time']}") for show in
+         sorted(result[game_type], key=lambda x: (x['time'], x['mouse clicks'], x['player']))[:8]]
+
         json_file.seek(0)
         json.dump(result, json_file, indent=9)
+
 
 def reset_button_state():
     # size_i = PICTURES[BUTTON_STATE].get_rect(center=(WIDTH / 2, SIZE_R))
@@ -99,11 +134,11 @@ def resize_window_parameters(new_width, new_height):
 
 def check_min_window_size(c_width, c_height):
     change_size = False
-    if c_width < 300:
-        c_width = 300
+    if c_width < 400:
+        c_width = 400
         change_size = True
-    if c_height < 300:
-        c_height = 300
+    if c_height < 400:
+        c_height = 400
         change_size = True
     return c_height, c_width, change_size
 
@@ -171,6 +206,8 @@ def draw_square():
 
 
 re_scale_all_pictures()
+high_score("_", True)
+
 
 while running:
     pygame.time.Clock().tick(FPS)
@@ -183,6 +220,8 @@ while running:
             if event.type == QUIT:
                 running = False
                 continue
+            PLAYER_NAME = typing_name(event, PLAYER_NAME)
+
         if not menu:
             mine_field = start_game(type_game)
             Figure.flag_counter = GAME_DIFFICULTY[type_game]["bombs"]
@@ -263,16 +302,19 @@ while running:
         print(click_counter, timer)
         game_stop = True
         game_over_result(False)
+        Figure.flag_counter = 0
         high_score(type_game)
 
     if not menu:
         draw_square()
 
-    if PICTURES[BUTTON_STATE].get_rect(center=(WIDTH / 2, SIZE_R)).collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0]:
+    if PICTURES[BUTTON_STATE].get_rect(center=(WIDTH / 2, SIZE_R)).collidepoint(pygame.mouse.get_pos()) and \
+            pygame.mouse.get_pressed()[0]:
         menu = True
         BUTTON_STATE = "square_restart"
         timer, click_counter = 0, 0
         game_stop = False
+        SIZE_R, SIZE_C = 72, 72
 
     pygame.display.update()
 pygame.quit()

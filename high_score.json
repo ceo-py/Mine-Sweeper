@@ -1,5 +1,667 @@
 {
-         "beginner": [],
-         "intermediate": [],
+         "beginner": [
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 14,
+                           "mouse clicks": 35
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 18,
+                           "mouse clicks": 56
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 13,
+                           "mouse clicks": 40
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 18,
+                           "mouse clicks": 48
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 15,
+                           "mouse clicks": 39
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 15,
+                           "mouse clicks": 44
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 17,
+                           "mouse clicks": 46
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 15,
+                           "mouse clicks": 35
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 13,
+                           "mouse clicks": 31
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 14,
+                           "mouse clicks": 35
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 16,
+                           "mouse clicks": 41
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 15,
+                           "mouse clicks": 43
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 15,
+                           "mouse clicks": 33
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 29,
+                           "mouse clicks": 31
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 17,
+                           "mouse clicks": 20
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 9,
+                           "mouse clicks": 14
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 15,
+                           "mouse clicks": 11
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 20,
+                           "mouse clicks": 41
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 10,
+                           "mouse clicks": 23
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 10,
+                           "mouse clicks": 18
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 13,
+                           "mouse clicks": 30
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 29,
+                           "mouse clicks": 32
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 45,
+                           "mouse clicks": 32
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 21,
+                           "mouse clicks": 38
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 11,
+                           "mouse clicks": 24
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 13,
+                           "mouse clicks": 30
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 20,
+                           "mouse clicks": 49
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 16,
+                           "mouse clicks": 41
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 12,
+                           "mouse clicks": 22
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 29,
+                           "mouse clicks": 56
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 14,
+                           "mouse clicks": 36
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 14,
+                           "mouse clicks": 33
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 9,
+                           "mouse clicks": 19
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 11,
+                           "mouse clicks": 31
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 11,
+                           "mouse clicks": 30
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 13,
+                           "mouse clicks": 33
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 15,
+                           "mouse clicks": 38
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 12,
+                           "mouse clicks": 32
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 13,
+                           "mouse clicks": 34
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 13,
+                           "mouse clicks": 37
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 11,
+                           "mouse clicks": 27
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 11,
+                           "mouse clicks": 29
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 11,
+                           "mouse clicks": 21
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 13,
+                           "mouse clicks": 26
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 18,
+                           "mouse clicks": 48
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 13,
+                           "mouse clicks": 37
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 14,
+                           "mouse clicks": 39
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 13,
+                           "mouse clicks": 29
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 11,
+                           "mouse clicks": 28
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 13,
+                           "mouse clicks": 30
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 9,
+                           "mouse clicks": 19
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 12,
+                           "mouse clicks": 27
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 12,
+                           "mouse clicks": 21
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 18,
+                           "mouse clicks": 38
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 14,
+                           "mouse clicks": 35
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 11,
+                           "mouse clicks": 21
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 12,
+                           "mouse clicks": 26
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 16,
+                           "mouse clicks": 37
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 10,
+                           "mouse clicks": 24
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 12,
+                           "mouse clicks": 26
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 12,
+                           "mouse clicks": 27
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 17,
+                           "mouse clicks": 47
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 15,
+                           "mouse clicks": 41
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 15,
+                           "mouse clicks": 39
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 15,
+                           "mouse clicks": 39
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 14,
+                           "mouse clicks": 44
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 17,
+                           "mouse clicks": 46
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 14,
+                           "mouse clicks": 32
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 8,
+                           "mouse clicks": 21
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 12,
+                           "mouse clicks": 39
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 14,
+                           "mouse clicks": 35
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 11,
+                           "mouse clicks": 30
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 14,
+                           "mouse clicks": 27
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 15,
+                           "mouse clicks": 36
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 4,
+                           "mouse clicks": 16
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 16,
+                           "mouse clicks": 45
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 13,
+                           "mouse clicks": 34
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 16,
+                           "mouse clicks": 36
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 13,
+                           "mouse clicks": 32
+                  },
+                  {
+                           "player": "anonymous",
+                           "time": 16,
+                           "mouse clicks": 24
+                  },
+                  {
+                           "player": "Ceo",
+                           "time": 10,
+                           "mouse clicks": 21
+                  },
+                  {
+                           "player": "Ceo",
+                           "time": 15,
+                           "mouse clicks": 31
+                  },
+                  {
+                           "player": "anonymous",
+                           "time": 78,
+                           "mouse clicks": 25
+                  },
+                  {
+                           "player": "Ceo",
+                           "time": 17,
+                           "mouse clicks": 42
+                  },
+                  {
+                           "player": "Ceo",
+                           "time": 16,
+                           "mouse clicks": 38
+                  },
+                  {
+                           "player": "Ceo",
+                           "time": 13,
+                           "mouse clicks": 33
+                  }
+         ],
+         "intermediate": [
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 106,
+                           "mouse clicks": 201
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 92,
+                           "mouse clicks": 181
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 78,
+                           "mouse clicks": 161
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 161,
+                           "mouse clicks": 229
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 88,
+                           "mouse clicks": 159
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 89,
+                           "mouse clicks": 165
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 79,
+                           "mouse clicks": 183
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 93,
+                           "mouse clicks": 152
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 79,
+                           "mouse clicks": 175
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 78,
+                           "mouse clicks": 172
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 80,
+                           "mouse clicks": 205
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 85,
+                           "mouse clicks": 170
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 78,
+                           "mouse clicks": 170
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 84,
+                           "mouse clicks": 201
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 69,
+                           "mouse clicks": 153
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 61,
+                           "mouse clicks": 146
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 77,
+                           "mouse clicks": 165
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 78,
+                           "mouse clicks": 188
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 60,
+                           "mouse clicks": 127
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 93,
+                           "mouse clicks": 161
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 67,
+                           "mouse clicks": 169
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 97,
+                           "mouse clicks": 175
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 65,
+                           "mouse clicks": 169
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 68,
+                           "mouse clicks": 166
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 71,
+                           "mouse clicks": 175
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 70,
+                           "mouse clicks": 167
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 83,
+                           "mouse clicks": 159
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 68,
+                           "mouse clicks": 175
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 136,
+                           "mouse clicks": 185
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 79,
+                           "mouse clicks": 192
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 86,
+                           "mouse clicks": 174
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 66,
+                           "mouse clicks": 134
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 83,
+                           "mouse clicks": 186
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 94,
+                           "mouse clicks": 149
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 85,
+                           "mouse clicks": 171
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 79,
+                           "mouse clicks": 176
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 79,
+                           "mouse clicks": 161
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 77,
+                           "mouse clicks": 139
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 110,
+                           "mouse clicks": 237
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 73,
+                           "mouse clicks": 167
+                  },
+                  {
+                           "player": "ANONYMOUS",
+                           "time": 62,
+                           "mouse clicks": 135
+                  },
+                  {
+                           "player": "anonymous",
+                           "time": 93,
+                           "mouse clicks": 139
+                  },
+                  {
+                           "player": "anonymous",
+                           "time": 73,
+                           "mouse clicks": 157
+                  },
+                  {
+                           "player": "anonymous",
+                           "time": 97,
+                           "mouse clicks": 188
+                  },
+                  {
+                           "player": "anonymous",
+                           "time": 113,
+                           "mouse clicks": 160
+                  },
+                  {
+                           "player": "anonymous",
+                           "time": 102,
+                           "mouse clicks": 129
+                  }
+         ],
          "expert": []
 }
