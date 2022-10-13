@@ -206,7 +206,7 @@ def draw_square():
 
 
 re_scale_all_pictures()
-high_score("_", True)
+# high_score("_", True)
 
 
 while running:
